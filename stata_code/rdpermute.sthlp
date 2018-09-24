@@ -41,7 +41,7 @@ true_discont({it:string})
 {dlgtab:Required}
 
 {phang}
-{opt placebo_disconts} defines the locations of placebo kinks. See Section 3.3 of Ganong and Jäger (2018) for a discussion on how to select {opt placebo_disconts}.
+{opt placebo_disconts} defines the locations of placebo kinks. See Section 3.3 of Ganong and Jäger (2017) for a discussion on how to select {opt placebo_disconts}.
 
 {phang}
 {opt true_discont} defines the integer at which the true kink or discontinuity is located. This value has to appear in the set  {cmd:placebo_disconts}. If {cmd:placebo_disconts} is not generated manually, but automatically (for example by loops), it may happen that the binary representations of {cmd:true_discont} differs from its corresponding value in {cmd:placebo_disconts}. In this case it is possible to use the parameter {cmd:position_true_discont} instead. Unless rdpermute prints an error message, this modification is not necessary.
@@ -110,16 +110,52 @@ true_discont({it:string})
 {hline}
 
 {marker examples}{...}
-{title:Examples}
+{dlgtab: Example: RD}
 
-{phang}
-{cmd: rdpermute} {cmd:y} {cmd:x}, {cmd:placebo_disconts(-0.9(0.1)0.9)} {cmd:true_discont(0)} {cmd:linear} {cmd:quad} {cmd:silent} {cmd:bw(fg)} {cmd:save_path(~/Data/working/)} {cmd:filename(placebo_pvalues)} {cmd:dgp(1)} {cmd:fg_density_porder(1)}{p_end}
+{p 4 4 2} Lee (2008) uses a regression discontinuity design with the vote share margin as the running variable to estimate the effect of incumbency on likelihood of winning the next election. This plot provides visual evidence that a Democrat winning an election discretely increases the probability a Democrat will win the next election. {p_end}
 
-{phang}
-{cmd: rdpermute} {cmd:y} {cmd:x}, {cmd:placebo_disconts(-100(10)200)} {cmd:true_discont(20)} {cmd:linear} {cmd:silent} {cmd:bw(manual)} {cmd:save_path(~/Data/working/)} {cmd:filename(placebo_pvalues)} {cmd:bw_manual(10)}{p_end}
+{p 4 4 2} To conduct the permutation test, we take the data as given and treat the discontinuity point as a random variable. We calculate the RD coefficient at a given set of placebo discontinuities, which are different values of the Democratic vote share. We compare the estimates at these placebos to the estimate at the true discontinuity. We specify the following options:{p_end}
 
-{phang}
-{cmd: rdpermute} {cmd:y} {cmd:x}, {cmd:placebo_disconts(1960(0.25)2017)} {cmd:true_discont(2000)} {cmd:linear} {cmd:quad} {cmd:bw(cct)}  {cmd:cct_bw_par(<bwselect>cerrd</bwselect>)}{p_end}
+{p 8 8} {cmd:placebo_disconts(-50(1)49)} means we use 100 placebo discontinuities from -50 through 49 {p_end}
+{p 8 8} {cmd:true_discont(0)} means the true discontinuity is at 0 {p_end}
+{p 8 8} {cmd:deriv_discont(0)} means we are looking for a change in the intercept {p_end}
+{p 8 8} {cmd:linear} means we are using a local linear regression {p_end}
+
+{phang}{cmd:.  use example_data/lee_election, clear}  {p_end}
+{phang}{cmd:.  rdpermute y x, placebo_disconts(-50(1)49) true_discont(0) deriv_discont(0) linear}  {p_end}
+
+{p 4 4 2} The conclusions from the asymptotic and permutation tests coincide: under both methodologies we reject the null hypothesis that incumbency does not affect future election victory. {p_end}
+
+
+{dlgtab: Example: RK with kink}
+
+{p 4 4 2} Here we simulate data with an obvious kink at 0. {p_end}
+
+{p 4 4 2} We specify the following options: {p_end}
+
+{p 8 8} {cmd:placebo_disconts(-.98(.02)1)} means we use 100 placebo kinks from -.98 through 1 {p_end}
+{p 8 8} {cmd:true_discont(0)} means the true discontinuity is at 0 {p_end}
+{p 8 8} {cmd:linear} means we are using a local linear regression {p_end}
+{p 8 8} The default for {cmd:deriv_discont(1)} means we are looking for a change in the slope. {p_end}
+
+{phang}{cmd:.  use example_data/sim1, clear}  {p_end}
+{phang}{cmd:.  rdpermute y x, placebo_disconts(-.98(.02)1) true_discont(0) linear}  {p_end}
+
+{p 4 4 2} The conclusions from the tests agree: both show highly significant slope changes at the policy kink point. {p_end}
+
+{dlgtab: Example: RK without kink}
+
+
+{p 4 4 2}In this example, we generate data with curvature around the kink point. In such cases, misspecification of the functional form can lead to spurious RKD coefficients.
+ {p_end}
+
+{p 4 4 2} We use the same specification as in the "RK with kink" example above. {p_end}
+
+{phang}{cmd:.  use example_data/sim2, clear}  {p_end}
+{phang}{cmd:.  rdpermute y x, placebo_disconts(-.98(.02)1) true_discont(0) linear}  {p_end}
+
+{p 4 4 2} The conclusions from the tests disagree. The asymptotic test for linear RKD rejects the null hypothesis even though the underlying data-generating process features no discontinuous slope changes. In contrast, the permutation test correctly detects no kink. {p_end}
+
 
 
 {marker stored_results}{...}
@@ -162,7 +198,7 @@ Optional .dta output: collapses all of the above into a single file.
 
 {phang} Fan, J. and Gijbels, I. {it:Local Polynomial Modelling and Its Applications,} volume 66. Chapman and Hall (1996). {p_end}
 
-{phang} Ganong, P. and Jäger, S. "A Permutation Test for the Regression Kink Design." {it:Journal of the American Statistical Association} (2018). {p_end}
+{phang}Ganong, P. and Jäger, S. "A permutation test for the regression kink design". {it:Journal of the American Statistical Association}, 113(522), pp.494-504 (2018). {p_end}
 
 {phang} Nichols, A. "rd 2.0: Revised Stata module for regression discontinuity estimation." (2011). {p_end}
 
@@ -180,15 +216,19 @@ Optional .dta output: collapses all of the above into a single file.
 
 {phang} All dependent packages will automatically download at the first run of rdpermute. See {cmd: skip_install} for suppressing the installation.{p_end}
 
+
+
+
+
 {marker authors}{...}
 {title:Authors}{...}
 
 
 {pstd} Peter Ganong, University of Chicago, {browse "mailto:ganong@uchicago.edu":ganong@uchicago.edu}. {p_end}
 
-{phang}Simon Jäger, MIT,  {browse "sjaeger@mit.edu":sjaeger@mit.edu}. {p_end}
+{phang}Simon Jäger, MIT, sjaeger[at]mit.edu. {p_end}
 
 {marker acknowledgments}{...}
 {title:Acknowledgments}{...}
 
-{pstd}Dennis Kubitza and Michael Schöner provided excellent research assistance to develop the Stata package. {p_end}
+{pstd}Ari Anisfeld, Dennis Kubitza and Michael Schöner provided excellent research assistance to develop the Stata package. {p_end}
