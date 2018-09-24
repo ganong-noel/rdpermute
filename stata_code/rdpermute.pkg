@@ -1,0 +1,5 @@
+v 3
+d Peter Ganong, Simon Jäger
+p rdpermute Permutation test for RD and RK designs
+f rdpermute.ado
+f rdpermute.sthlp
