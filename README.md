@@ -10,8 +10,7 @@ winning the next election. This plot provides visual evidence that a Democrat wi
 an election discretely increases the probability a Democrat will win the next election.
 
 ```{s}
-    cap program drop rdpermute
-    run rdpermute.ado
+    cap ssc install rdpermute
     cap ssc install binscatter
     use example_data/lee_election, clear
     binscatter y x, line(none) ytitle(Democrat Win Next Election) xtitle(Democratic Vote Share) nquant(100) rd(0)
