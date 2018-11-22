@@ -36,6 +36,20 @@ The conclusions from the asymptotic and permutation tests coincide: under both
 methodologies we reject the null hypothesis that incumbency does not affect future
 election victory.
 
+Below we plot the placebo distribution with an arrow that points to where the true kink point lies. In this case it is clearly an extreme value in the placebo distribution.
+
+```{s}
+    matrix placebos = e(kink_beta_linear)
+    svmat placebos
+    local true_beta = placebos[51,1]
+
+    twoway (hist placebos1, bin(20) xtitle("Estimated kink coefficients") freq) \\\
+    (pcarrowi 10 `true_beta' 5 `true_beta',text(12 `true_beta' "estimate at true kink")),\\\
+    legend(off)  graphregion(color("white"))
+    graph export lee_hist.png, width(500) replace
+```
+![Placebo distribution Lee (2008)](graphs/lee_hist.png)
+
 **Example 2: RK with kink**
 
 Here we simulate data with an obvious kink at 0.
@@ -61,6 +75,19 @@ The default for `deriv_discont(1)` means we are looking for a change in the slop
 ```
 The conclusions from the tests agree: both show highly significant slope changes at the policy kink point.
 
+Once again we plot the placebo distribution with an arrow that points to where the true kink point lies. The true kink point is an extreme value in the placebo distribution. While a few placebo values are within the same histogram bin, the estimated coefficient at the true policy kink point is the most extreme.
+
+```{s}
+    matrix placebos = e(kink_beta_linear)
+    svmat placebos
+    local true_beta = placebos[51,1]
+
+    twoway (hist placebos1, bin(20) xtitle("Estimated kink coefficients") freq) \\\
+    (pcarrowi 12 `true_beta' 7 `true_beta', text(14 17 "estimate at true kink")),\\\
+    legend(off)  graphregion(color("white"))
+    graph export sim1_hist.png, width(500) replace
+```
+![Placebo distribution data simulated with a kink](graphs/sim1_hist.png)
 
 **Example 3: RK without kink**
 
@@ -84,6 +111,21 @@ We use the same specification as in example 2.
 The conclusions from the tests disagree. The asymptotic test for linear RKD rejects
 the null hypothesis even though the underlying data-generating process features no
 discontinuous slope changes. In contrast, the permutation test correctly detects no kink.
+
+The estimated coefficient at the true policy kink point is near the center of the placebo 
+distribution. 
+
+```{s}
+    matrix placebos = e(kink_beta_linear)
+    svmat placebos
+    local true_beta = placebos[51,1]
+    
+    twoway (hist placebos1, bin(20) xtitle("Estimated kink coefficients") freq) \\\
+    (pcarrowi 15 `true_beta' 13.5 `true_beta', text(15.5 `true_beta' "estimate at true kink")), \\\ 
+    legend(off)  graphregion(color("white"))
+    graph export sim2_hist.png, width(500) replace
+```
+![Placebo distribution data simulated without a kink)](graphs/sim2_hist.png)
 
 In each example, we used 100 evenly spaced placebos over the main support of the
 running variable. For an extended discussion of the choice of placebo kink locations,
