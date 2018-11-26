@@ -14,7 +14,6 @@ an election discretely increases the probability a Democrat will win the next el
     cap ssc install binscatter
     use example_data/lee_election, clear
     binscatter y x, line(none) ytitle(Democrat Win Next Election) xtitle(Democratic Vote Share) nquant(100) rd(0)
-    graph export lee.png, width(500) replace
 ```
 ![Lee (2008)](graphs/lee.png)
 
@@ -54,8 +53,7 @@ Here we simulate data with an obvious kink at 0.
 ```{s}
     use "example_data/sim1", clear
     binscatter y x, line(none) nquant(100) rd(0)
-    graph export sim1.png, width(500) replace
-```
+ ```
 
 ![Data simulated with a kink](graphs/sim1.png)
 
@@ -91,7 +89,6 @@ misspecification of the functional form can lead to spurious RKD coefficients.
 ```{s}
     use "example_data/sim2", clear
     binscatter y x, line(none) nquant(100) rd(0)
-    graph export sim2.png, width(500) replace
 ```
 
 ![Data simulated without a kink](graphs/sim2.png)
