@@ -43,10 +43,7 @@ Below we plot the placebo distribution with an arrow that points to where the tr
     svmat placebos
     local true_beta = placebos[51,1]
 
-    twoway (hist placebos1, bin(20) xtitle("Estimated kink coefficients") freq) \\\
-    (pcarrowi 10 `true_beta' 5 `true_beta',text(12 `true_beta' "estimate at true kink")),\\\
-    legend(off)  graphregion(color("white"))
-    graph export lee_hist.png, width(500) replace
+    twoway hist placebos1 ...
 ```
 ![Placebo distribution Lee (2008)](graphs/lee_hist.png)
 
@@ -82,10 +79,7 @@ Once again we plot the placebo distribution with an arrow that points to where t
     svmat placebos
     local true_beta = placebos[51,1]
 
-    twoway (hist placebos1, bin(20) xtitle("Estimated kink coefficients") freq) \\\
-    (pcarrowi 12 `true_beta' 7 `true_beta', text(14 17 "estimate at true kink")),\\\
-    legend(off)  graphregion(color("white"))
-    graph export sim1_hist.png, width(500) replace
+    twoway hist placebos1 ...
 ```
 ![Placebo distribution data simulated with a kink](graphs/sim1_hist.png)
 
@@ -120,10 +114,7 @@ distribution.
     svmat placebos
     local true_beta = placebos[51,1]
     
-    twoway (hist placebos1, bin(20) xtitle("Estimated kink coefficients") freq) \\\
-    (pcarrowi 15 `true_beta' 13.5 `true_beta', text(15.5 `true_beta' "estimate at true kink")), \\\ 
-    legend(off)  graphregion(color("white"))
-    graph export sim2_hist.png, width(500) replace
+    twoway hist placebos1 ...
 ```
 ![Placebo distribution data simulated without a kink)](graphs/sim2_hist.png)
 
@@ -133,6 +124,6 @@ see section 3.3 of Ganong & J&auml;ger (2018).
 
 **Citations:**
 
-Ganong, P. & Jäger, S. (2018), "A Permutation Test for the Regression Kink Design", Journal of the American Statistical Association, 113:522, 494-504, DOI: (10.1080/01621459.2017.1328356)[10.1080/01621459.2017.132835]
+Ganong, P. & Jäger, S. (2018), "A Permutation Test for the Regression Kink Design", Journal of the American Statistical Association, 113:522, 494-504, DOI: [10.1080/01621459.2017.132835](10.1080/01621459.2017.1328356)
 
 Lee, D. S. (2008), “Randomized Experiments From Non-Random Selection in US House Elections,” Journal of Econometrics, 142, 675–697.
