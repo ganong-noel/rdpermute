@@ -2,10 +2,6 @@
 ==============
 We present three examples of `rdpermute` used as a complement to standard RDD or RKD asymptotic tests.
 
-![Placebo distribution data simulated with a kink](graphs/sim1_hist.png)
-![Placebo distribution data simulated without a kink)](graphs/sim2_hist.png)
-
-
 **Example 1: RD**
 
 Lee (2008) uses a regression discontinuity design with the vote share
