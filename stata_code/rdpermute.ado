@@ -1,9 +1,9 @@
 /*
- SIGNATURE
+NOTE: This is a copy of rdpermute used while developing rep_kit. Check for updates on SSC.
 ————
 Code for Paper "A Permutation Test for the Regression Kink Design"
 Peter Ganong and Simon Jaeger
-ganong@gmail.com, sjaeger1986@gmail.com
+ganong@gmail.com, sjaeger@mit.edu
 Please contact us with feature suggestions and questions!
 
  rdpermute (Version 1.0.0)
@@ -15,7 +15,7 @@ Please contact us with feature suggestions and questions!
 -------------------------------
  Authors:
  - Peter Ganong (ganong@uchicago.edu)
- - Simon Jaeger (sjaeger1986@gmail.com)
+ - Simon Jaeger (sjaeger@mit.edu)
 
  Dependencies:
  - rd
@@ -60,7 +60,8 @@ Default matrix output:
 
 Annotations
 ---------------
-- To avoid the unindented manipulation of Variables in the Dataset, we use the prefix rdpermute_ for all Variables defined in following code.
+- To avoid the unindented manipulation of Variables in the Dataset,
+ we use the prefix rdpermute_ for all Variables defined in following code.
 */
 
 cap program drop rdpermute
@@ -272,7 +273,8 @@ qui {
 						*Calculate eigenvector for inversion control
 						mata: st_matrix("minabslambda",min(abs(st_matrix("lambda"))))
 						if minabslambda[1,1]<0.01 {
-							*If inversion might get unstable turn models off, that need at least the current p
+							*If inversion might get unstable turn models off,
+							* that need at least the current p
 							if (`p' == 4){
 								local cubic_off="off"
 							}
@@ -338,7 +340,7 @@ qui {
 					sum rdpermute_x_1
 					local min_x = r(min)
 					local max_x = r(max)
-					local step_size =  (`max_x'-`min_x') / `fg_num_bins'
+					local step_size = (r(max)-r(min))/`fg_num_bins'
 					gen rdpermute_bin_var = .
 					forvalues mu = 1/`fg_num_bins' {
 						replace rdpermute_bin_var = `mu' if rdpermute_x_1>=(`min_x'+(`mu'-1)*`step_size')&rdpermute_x_1<(`min_x'+(`mu')*`step_size')
@@ -350,7 +352,7 @@ qui {
 						gen rdpermute_f_x_`p' = rdpermute_x_1^`p'
 					}
 					qui reg rdpermute_f_discrete rdpermute_f_x_*, noconst
-					local f_hat_0 = `fg_num_bins' * _b[rdpermute_f_x_0] / (`max_x'-`min_x') //
+					local f_hat_0 = `fg_num_bins' * _b[rdpermute_f_x_0] / (`max_x'-`min_x') //_b[f_x_0]
 				}
 				else {
 					local f_hat_0 = `fg_f_0'
@@ -431,7 +433,7 @@ qui {
 				local reg_kernel = "triangular"
 				local reg_bwselect = "mserd"
 				local reg_vce = "nn 3"
-				*analyize alternative parameters for rdrobust
+				*analyze alternative parameters for rdrobust
 				if ("`cct_reg_par'" !=  ""){
 					foreach par1name in "reg_c" "reg_fuzzy" "reg_covs" "reg_kernel" "reg_weights" "reg_bwselect" "reg_vce" "reg_b" {
 						local from = strpos("`cct_reg_par'", "<"+"`par1name'"+">") + strlen("`par1name'") +2
@@ -468,7 +470,7 @@ qui {
 			clear
 			qui svmat kink_beta_`p'
 			egen rank_tmp_pos = rank(kink_beta_`p'1)
-			scalar pval = 2*min(rank_tmp_pos[true_discont_index]/`kinks_n',1-rank_tmp_pos[true_discont_index]/`kinks_n')
+			scalar pval = 2*min(rank_tmp_pos[true_discont_index]/`kinks_n',1-((rank_tmp_pos[true_discont_index])-1)/`kinks_n')
 			`noi' di as result "p-value random: " pval
 			mat pval_`p'[2,1] = pval
 			mat list pval_`p'
