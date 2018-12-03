@@ -1,5 +1,4 @@
 /*
-NOTE: This is a copy of rdpermute used while developing rep_kit. Check for updates on SSC.
 ————
 Code for Paper "A Permutation Test for the Regression Kink Design"
 Peter Ganong and Simon Jaeger
