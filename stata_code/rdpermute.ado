@@ -5,7 +5,7 @@ Peter Ganong and Simon Jaeger
 ganong@gmail.com, sjaeger@mit.edu
 Please contact us with feature suggestions and questions!
 
- rdpermute (Version 1.0.0)
+ rdpermute (Version 1.0.1)
 -------------------------------
  The function provides an implementation for the Regression Kink Permuation
  Test described in "A Permutation Test for the Regression Kink Design"
@@ -49,10 +49,9 @@ Default matrix output:
 	e(bw_quad)
 	e(pval_quad)
 
-	With N as number of placebo kinks, matrices kink* and bw* are Nx2.
-	Column 1 is output using CCT bandwidth choice. Column 2 uses FG bandwidth choice.
+	With N as number of placebo kinks, matrices kink* and bw* are Nx1.
 
-	Matrices pval* are 2 x 2. Row 1 is asymptotic pvalue. Row 2 is randomization pvalue.
+	Matrices pval* are 2 x 1. Row 1 is asymptotic pvalue. Row 2 is randomization pvalue.
 
     Optional .dta output: collapses all of the above into a single file.
 
@@ -65,6 +64,7 @@ Annotations
 
 cap program drop rdpermute
 program define rdpermute, eclass
+  version 13.0
 	syntax varlist [if] [, ///
 		placebo_disconts(numlist) ///
 		true_discont(string) ///
@@ -351,7 +351,7 @@ qui {
 						gen rdpermute_f_x_`p' = rdpermute_x_1^`p'
 					}
 					qui reg rdpermute_f_discrete rdpermute_f_x_*, noconst
-					local f_hat_0 = `fg_num_bins' * _b[rdpermute_f_x_0] / (`max_x'-`min_x') //_b[f_x_0]
+					local f_hat_0 = `fg_num_bins' * _b[rdpermute_f_x_0] / (`max_x'-`min_x')
 				}
 				else {
 					local f_hat_0 = `fg_f_0'
@@ -416,7 +416,7 @@ qui {
 			}
 		}
 		else if ("`reg'" == "cct") {
-			foreach p in `linear' `quad' `cubic'{ //Regression for 'cubic is missing, althought it is specified in the bandwith selection
+			foreach p in `linear' `quad' `cubic'{
 				if ("`p'" == "linear") {
 					local p_n = 1
 					local q_n = 2
@@ -432,7 +432,7 @@ qui {
 				local reg_kernel = "triangular"
 				local reg_bwselect = "mserd"
 				local reg_vce = "nn 3"
-				*analyze alternative parameters for rdrobust
+				*set alternative parameters for rdrobust
 				if ("`cct_reg_par'" !=  ""){
 					foreach par1name in "reg_c" "reg_fuzzy" "reg_covs" "reg_kernel" "reg_weights" "reg_bwselect" "reg_vce" "reg_b" {
 						local from = strpos("`cct_reg_par'", "<"+"`par1name'"+">") + strlen("`par1name'") +2
