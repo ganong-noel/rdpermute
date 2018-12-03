@@ -463,7 +463,12 @@ qui {
 			mat pval_`p'[1,1] = 2*(1-normal(abs(`t')))
 			`noi' di as result "Bandwidth at true discontinuity using `bw': " bw_`p'[true_discont_index,1]
 			`noi' di as result "Coef at true discontinuity is " kink_beta_`p'[true_discont_index,1]
-			`noi' di as result "p-value asymptotic: "  round(pval_`p'[1,1],0.0001)
+
+      local tmp_pval = round(pval_`p'[1,1], 0.0001)
+      if ( `tmp_pval' == 0) {
+        local tmp_pval = "<.0001"
+      }
+			`noi' di as result "p-value asymptotic: "  "`tmp_pval'"
 
 			*randomization-based SEs
 			clear
