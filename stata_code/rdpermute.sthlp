@@ -23,8 +23,7 @@
 {title:Syntax}
 
 {p 8 17 2}
-{cmdab:rdpermute depvar runvar}
-[{it:if}],
+{cmdab:rdpermute depvar runvar},
 placebo_disconts({it:numlist})
 true_discont({it:string})
 [position_true_discont({it:#}) deriv_discont({it:#}) bw({it:#})) linear quad cubic skip_install filename({it:#}) save_path({it:#}) dgp({it:#}) bw_manual({it:#}) fg_bandwidth_scaling({it:# #}) fg_bias_porder({it:#}) fg_f_0({it:#}) fg_density_porder({it:#}) fg_num_bins({it:#}) cct_bw_par({it:#}) cct_reg_par({it:#}) silent ]

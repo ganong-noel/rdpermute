@@ -5,7 +5,7 @@ Peter Ganong and Simon Jaeger
 ganong@gmail.com, sjaeger@mit.edu
 Please contact us with feature suggestions and questions!
 
- rdpermute (Version 1.0.1)
+ rdpermute (Version 1.0.2)
 -------------------------------
  The function provides an implementation for the Regression Kink Permuation
  Test described in "A Permutation Test for the Regression Kink Design"
