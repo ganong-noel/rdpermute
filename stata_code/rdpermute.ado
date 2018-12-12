@@ -65,7 +65,7 @@ Annotations
 cap program drop rdpermute
 program define rdpermute, eclass
   version 13.0
-	syntax varlist [if] [, ///
+	syntax varlist [, ///
 		placebo_disconts(numlist) ///
 		true_discont(string) ///
 		position_true_discont(integer -1) ///
