@@ -481,7 +481,7 @@ qui {
 	local tmp_pvalr = round(pval_`p'[2,1], 0.0001)
         if ( `tmp_pvalr' == 0) {
         local tmp_pvalr = "<.0001"
-			
+		}
 			`noi' di as result "p-value random: "`tmp_pvalr'"
 		}
 	}
