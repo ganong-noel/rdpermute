@@ -475,9 +475,14 @@ qui {
 			qui svmat kink_beta_`p'
 			egen rank_tmp_pos = rank(kink_beta_`p'1)
 			scalar pval = 2*min(rank_tmp_pos[true_discont_index]/`kinks_n',1-((rank_tmp_pos[true_discont_index])-1)/`kinks_n')
-			`noi' di as result "p-value random: " pval
 			mat pval_`p'[2,1] = pval
 			mat list pval_`p'
+			
+	local tmp_pvalr = round(pval_`p'[2,1], 0.0001)
+        if ( `tmp_pvalr' == 0) {
+        local tmp_pvalr = "<.0001"
+		}
+			`noi' di as result "p-value random: "`tmp_pvalr'"
 		}
 	}
 
