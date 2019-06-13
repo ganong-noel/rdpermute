@@ -99,7 +99,7 @@ true_discont({it:string})
 {opt cct_bw_par(string)} specifies additional or alternative parameters for the subroutine {cmd:rdbwselect} for the choice {cmd:bw(cct)}. All parameters of {cmd:rdbwselect} can be altered except for: y, x, p, q, deriv. To alter an option, define the intended values within html-Tags within the string. Example: {cmd:cct_bw_par}("<kernel>epa</kernel><bwselect>cerrd</bwselect>").
 
 {phang}
-{opt cct_reg_par(string)} specifies additional or alternative parameters for the subroutine {cmd:rdrobust} for the choice {cmd:bw(cct)}. All parameters of rdrobust can be altered except for: y, x, p, q, deriv, h. Altering is done as in {cmd:cct_bw_par}.
+{opt cct_reg_par(string)} specifies additional or alternative parameters for the subroutine {cmd:rdrobust} for the choice {cmd:bw(cct)}. All parameters of rdrobust can be altered except for: y, x, p, q, deriv, h. Altering is done as in {cmd:cct_bw_par}, with a "reg_" prefix. Example: {cmd:cct_reg_par}("<reg_fuzzy>treat</reg_fuzzy><reg_vce>cluster run_var</reg_vce>").
 
 {phang}
 {opt silent} generates less output while running.
