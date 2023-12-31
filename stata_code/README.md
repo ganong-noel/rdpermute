@@ -9,7 +9,7 @@ This test is based on _'A Permutation Test for the Regression Kink Design"_ by _
 - We provided also a short [usage example](https://github.com/ganong-noel/rdpermute) applying **rdpermute** with different parameters on real-life Datasets, showing advantages and disadvantages of different running modes. 
 - In the case that you encounter a bug or want to provide suggestions for improving our code, feel free to commit under the Issues tab or contact us directly. 
  
-**Simon Jaeger, (sjaeger[at]mit.edu)** and **Peter Ganong, (gangong[at]uchicago.edu)**
+**Simon Jaeger, (sjaeger[at]mit.edu)** and **Peter Ganong, (ganong[at]uchicago.edu)**
 
 
 Installation
